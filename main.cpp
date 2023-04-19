@@ -55,16 +55,39 @@ bool validator(std::vector<Movie> arr) {
     return true;
 }
 
+double average_rating(std::vector<Movie>& arr) {
+    int n = arr.size();
+    int sum = 0;
+
+    for (auto elem : arr) {
+        sum += elem.get_rating();
+    }
+
+    return (double)sum/n;
+}
+
+double median_rating(std::vector<Movie>& arr) {
+    int n = arr.size();
+
+    if (n%2 == 0) {
+        return (double)(arr[n/2 - 1].get_rating() + arr[n/2].get_rating()) / 2.0;
+    }
+
+    return (double)arr[n/2].get_rating();
+}
+
 int main() {
     std::vector<Movie> data = get_csv_data("projekt2_dane.csv", MAX_SIZE);
     //mergeSort(data, 0, data.size()-1);
     //quicksort(data, 0, data.size()-1);
     introsort(data);
 
-    for (auto elem : data) {
-        elem.print_data();
-    }
+    // for (auto elem : data) {
+    //     elem.print_data();
+    // }
 
-    std::cout << validator(data);
+    std::cout << validator(data) << std::endl;
+    std::cout << average_rating(data) << std::endl;
+    std::cout << median_rating(data) << std::endl;
     return 0;
 }

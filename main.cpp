@@ -102,12 +102,4 @@ int main() {
 
         std::cout << std::endl;
     }
-
-    // std::vector<Movie> data = get_csv_data("projekt2_dane.csv", 10);
-    // quicksort(data, 0, data.size());
-
-    // for (auto elem : data) {
-    //     elem.print_data();
-    // }
-
 }

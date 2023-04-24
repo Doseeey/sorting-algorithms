@@ -5,6 +5,6 @@
 #include <vector>
 #include "quickSort.cpp"
 
-void quicksort(std::vector<Movie>& arr, int low, int high);
+void quicksort(std::vector<Movie>& arr, int left, int right);
 
 #endif

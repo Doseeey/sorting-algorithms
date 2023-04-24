@@ -2,6 +2,7 @@
 #include <fstream>
 #include <vector>
 #include <string>
+#include <chrono>
 #include "movie.h"
 #include "movie.cpp"
 #include "mergeSort.h"
@@ -77,17 +78,36 @@ double median_rating(std::vector<Movie>& arr) {
 }
 
 int main() {
-    std::vector<Movie> data = get_csv_data("projekt2_dane.csv", MAX_SIZE);
-    //mergeSort(data, 0, data.size()-1);
-    //quicksort(data, 0, data.size()-1);
-    introsort(data);
+    int sizes[] = {10000, 100000, 500000, 1000000, MAX_SIZE};
+
+    for (int i = 0; i < 5; i++) {
+        std::vector<Movie> data = get_csv_data("projekt2_dane.csv", sizes[i]);
+
+        auto start = std::chrono::high_resolution_clock::now();
+        //introsort(data);
+        //mergeSort(data, 0, data.size()-1);
+        quicksort(data, 0, data.size()-1);
+        auto stop = std::chrono::high_resolution_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop-start);
+
+        std::cout << "Sorting with data size: " << sizes[i] << std::endl;
+
+        if (validator(data)) {
+            std::cout << "Sorting time: " << (float)duration.count()/1000 << std::endl;
+            std::cout << "Average rating: " << average_rating(data) << std::endl;
+            std::cout << "Median rating: " << median_rating(data) << std::endl;
+        } else {
+            std::cout << "Error in validation" << std::endl;
+        }
+
+        std::cout << std::endl;
+    }
+
+    // std::vector<Movie> data = get_csv_data("projekt2_dane.csv", 10);
+    // quicksort(data, 0, data.size());
 
     // for (auto elem : data) {
     //     elem.print_data();
     // }
 
-    std::cout << validator(data) << std::endl;
-    std::cout << average_rating(data) << std::endl;
-    std::cout << median_rating(data) << std::endl;
-    return 0;
 }
